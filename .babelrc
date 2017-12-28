@@ -1,0 +1,13 @@
+{
+  "presets":  [["env",
+    {
+      "targets": {
+        "browsers": "last 6 versions",
+        "node": 4
+      },
+      "loose": true,
+      "debug": true
+    }]],
+  "ignore": ["*/dist/*"]
+
+}
