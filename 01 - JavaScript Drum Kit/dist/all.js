@@ -4,8 +4,6 @@
  * Created by ale on 27/12/17.
  */
 
-var playyxx = void 0;
-
 var play = function play(e) {
     console.log(e);
     var el = void 0;

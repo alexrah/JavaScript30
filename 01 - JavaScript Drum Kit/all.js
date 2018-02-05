@@ -2,8 +2,6 @@
  * Created by ale on 27/12/17.
  */
 
-let playyxx;
-
 const play = (e) =>
     {
         console.log(e);
