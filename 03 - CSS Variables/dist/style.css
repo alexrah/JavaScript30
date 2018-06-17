@@ -1,0 +1,33 @@
+/*
+  misc styles, nothing to do with CSS variables
+*/
+
+body {
+    text-align: center;
+    background: #193549;
+    color: white;
+    font-family: 'helvetica neue', sans-serif;
+    font-weight: 100;
+    font-size: 50px;
+}
+
+.controls {
+    margin-bottom: 50px;
+}
+
+input {
+    width:100px;
+}
+
+img {
+    background-color: red;
+    padding: 10px;
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="10" /></filter></svg>#filter');
+    -webkit-filter: blur(10px);
+            filter: blur(10px);
+
+}
+
+.hl { color: red}
+
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3N0eWxlLmNzcyIsIjxubyBzb3VyY2U+Il0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztFQUVFOztBQVNGO0lBQ0ksbUJBQW1CO0lBQ25CLG9CQUFvQjtJQUNwQixhQUFhO0lBQ2IsMENBQTBDO0lBQzFDLGlCQUFpQjtJQUNqQixnQkFBZ0I7Q0FDbkI7O0FBRUQ7SUFDSSxvQkFBb0I7Q0FDdkI7O0FBRUQ7SUFDSSxZQUFZO0NBQ2Y7O0FBRUQ7SUFDSSxzQkFBb0M7SUFDcEMsY0FBNkI7SUM5QmpDLHVLQUFBO0lEK0JJLDJCQUErQjtZQUEvQixtQkFBK0I7O0NBRWxDOztBQUVELE1BQU0sVUFBd0IsQ0FBQyIsImZpbGUiOiJzdHlsZS5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvKlxuICBtaXNjIHN0eWxlcywgbm90aGluZyB0byBkbyB3aXRoIENTUyB2YXJpYWJsZXNcbiovXG5cbjpyb290IHtcbiAgICAtLWJhc2UtY29sb3I6IHJlZDtcbiAgICAtLW1haW4tZm9udDogXCJBcmlhbFwiLCBzYW5zLXNlcmlmO1xuICAgIC0tbWFpbi1wYWRkaW5nOiAxMHB4O1xuICAgIC0tbWFpbi1ibHVyOiAxMHB4O1xufVxuXG5ib2R5IHtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgYmFja2dyb3VuZDogIzE5MzU0OTtcbiAgICBjb2xvcjogd2hpdGU7XG4gICAgZm9udC1mYW1pbHk6ICdoZWx2ZXRpY2EgbmV1ZScsIHNhbnMtc2VyaWY7XG4gICAgZm9udC13ZWlnaHQ6IDEwMDtcbiAgICBmb250LXNpemU6IDUwcHg7XG59XG5cbi5jb250cm9scyB7XG4gICAgbWFyZ2luLWJvdHRvbTogNTBweDtcbn1cblxuaW5wdXQge1xuICAgIHdpZHRoOjEwMHB4O1xufVxuXG5pbWcge1xuICAgIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWJhc2UtY29sb3IpO1xuICAgIHBhZGRpbmc6IHZhcigtLW1haW4tcGFkZGluZyk7XG4gICAgZmlsdGVyOiBibHVyKHZhcigtLW1haW4tYmx1cikpO1xuXG59XG5cbi5obCB7IGNvbG9yOiB2YXIoLS1iYXNlLWNvbG9yKX1cbiIsbnVsbF19 */

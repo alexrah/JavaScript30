@@ -2,8 +2,7 @@
   "presets":  [["env",
     {
       "targets": {
-        "browsers": "last 6 versions",
-        "node": 4
+        "browsers": "last 6 versions"
       },
       "loose": true,
       "debug": true
