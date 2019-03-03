@@ -45,10 +45,10 @@
     // 2. Give us an array of the inventors' first and last names
 
     const FirstLast = inventors.map(function (val, i) {
-        temp = [];
+        let temp = [];
         temp['first'] = val.first;
         temp.last = val.last ;
-       return temp;
+        return temp;
     });
 
     console.table(FirstLast);
@@ -66,6 +66,8 @@
     // 4. How many years did all the inventors live?
 
     const allLived = inventors.reduce(function (prevVal, currVal) {
+      console.log(prevVal);
+      console.log(currVal);
        let temp  = currVal.passed - currVal.year;
        return temp + prevVal;
     },0);
@@ -76,11 +78,20 @@
 
     function age(born,passed){ return passed-born;}
 
-    let SortByYear = inventors.map(function (val,i) {
+    console.table(inventors);
+
+
+    const SortByYear = inventors.map(function (val,i) {
+      console.log('value',val );
         let aged = age(val.year,val.passed);
-        val['age'] = aged;
-        return val;
-    });
+        /* I need to do this 'cos JS assign reference AND NOT VALUE when assign non-primitive data ref: https://codeburst.io/explaining-value-vs-reference-in-javascript-647a975e12a0 */
+        let newVal = JSON.parse(JSON.stringify(val));
+        newVal.age = aged;
+        return newVal;
+    },'ciccio');
+
+    console.table(inventors);
+
 
     SortByYear.sort(function(a,b){
         return (a.age > b.age)?-1:1;
@@ -88,7 +99,6 @@
 
 
     console.table(SortByYear);
-
 
 
 
@@ -102,6 +112,33 @@
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+    const uniqueData = data.filter((val, index)=>{
+      return data.indexOf(val) === index;
+    });
+
+
+    const sumData = uniqueData.map((val, index)=>{
+      let temp = {};
+      temp.value = val;
+      temp.count = data.reduce((returned,val)=>{
+        return (val === temp.value)?returned+1:returned;
+      },0);
+
+      return temp;
+
+    });
+
+    console.table(sumData);
+
+
+    const sumDataSmart = data.reduce((obj, val)=>{
+      if(!obj[val]){ obj[val] = 0}
+      obj[val]++;
+      return obj
+    },{});
+
+    console.table(sumDataSmart);
 
   </script>
 </body>
