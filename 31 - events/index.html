@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ciao come stai</title>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+
+    (function($){
+        $(function () {
+            document.addEventListener('custom_event',function (e) {
+                console.warn(e);
+            })
+        });
+
+    })(jQuery);
+
+
+
+</script>
+<iframe src="parent-iframe.html" frameborder="0"></iframe>
+</body>
+</html>

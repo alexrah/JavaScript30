@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">-->
+  <!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>-->
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+        integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+        crossorigin=""/>
+
+  <!-- Make sure you put this AFTER Leaflet's CSS -->
+  <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+          integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+          crossorigin=""></script>
+
+</head>
+<body>
+
+<h1>Hola!</h1>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <button class="clear-button">Clear</button>
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+
+  <div id="map" style="height: 200px"></div>
+
+<script>
+
+
+    document.addEventListener('injected',function() {
+        console.log('injected triggered');
+    });
+
+
+</script>
+
+<script>
+const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+
+const cities = [];
+
+const prom = window.fetch(endpoint)
+    .then(function(response) {
+        console.log('response', response);
+        if(response.ok){
+            return response.json();
+        }
+        throw new Error('fetch failed!');
+    })
+    .then(function (data) {
+        console.log('data',data );
+        data.forEach(function(val){
+            cities.push(val);
+        });
+
+    });
+
+console.log('prom', prom );
+
+const input_search = document.querySelector('.search');
+const suggestions = document.querySelector('.suggestions');
+const default_li = suggestions.innerHTML;
+input_search.addEventListener('keyup',function (event) {
+    if(this.value === '' || this.value.length < 2) return;
+    filter_results(this.value);
+});
+
+const clear_button = document.querySelector('.clear-button');
+clear_button.addEventListener('click',function (e) {
+    e.preventDefault();
+   input_search.value = '';
+   suggestions.innerHTML = default_li;
+
+});
+
+function filter_results(string){
+  console.log('string',string );
+  const filtered_cities = cities.filter(function (val) {
+
+      // return val.city.includes(string) || val.state.includes(string)
+      return val.city.toLowerCase().includes(string) || val.state.toLowerCase().includes(string);
+
+  });
+  console.table(filtered_cities);
+  if(filtered_cities.length){
+      suggestions.innerHTML = '';
+
+      filtered_cities.forEach(function (val) {
+          let new_suggestion = document.createElement('li');
+          let suggestion_text = val.city + ", " + val.state;
+          console.log('new_suggestion_text',suggestion_text );
+          let string_filter = new RegExp(string,'gi');
+          console.log('string_filter',string_filter );
+          let new_suggestion_text = suggestion_text.replace(string_filter,"<span class='hl'>$&</span>");
+          // new_suggestion_text.replace('Wes','ciao');
+          // new_suggestion.innerHTML = "<span class='name'>"+new_suggestion_text+"</span><button data-lat="+val.lat+" id='show_map'>show map</button>";
+          new_suggestion.innerHTML = `<span class="name">${new_suggestion_text}</span><button data-lat="${val.latitude}" data-long="${val.longitude}">show map</button>`;
+
+          suggestions.insertBefore(new_suggestion,suggestions.children[0]);
+      })
+
+      } else {
+          suggestions.innerHTML = '<li>Nothing found!</li>';
+  }
+
+  const filter_done = new Event('filter_done');
+  document.dispatchEvent(filter_done);
+
+}
+
+
+function load_map_lib(lat,lon) {
+    const map_script = document.createElement('script');
+    map_script.src = 'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap';
+    document.getElementsByTagName('head')[0].appendChild(map_script);
+}
+
+function initMap(lat,long) {
+    console.log('ok', );
+    // load_map_lib();
+
+    /* Leaflet OMS implementation https://leafletjs.com/ */
+    var map = L.map('map').setView([51.505, -0.09], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    //
+    L.marker([51.5, -0.09]).addTo(map)
+            .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+            .openPopup();
+}
+
+initMap();
+
+document.addEventListener('filter_done',function(){
+
+  const result_maps = document.querySelectorAll('.suggestions > li > button');
+  result_maps.forEach(function(elem){
+
+    elem.addEventListener('click',function(e){
+      e.preventDefault();
+      console.log('event',e.target.dataset );
+      initMap();
+
+    });
+
+  });
+
+
+});
+
+
+
+
+
+
+
+/* This code is unrelated */
+const my_h1 = document.createElement('h1');
+my_h1.classList = 'prova-h1';
+my_h1.innerText = "Dynamically created!" ;
+my_h1.style.textAlign = 'center';
+document.body.appendChild(my_h1);
+const injected = new Event('injected');
+document.dispatchEvent(injected);
+</script>
+  </body>
+</html>
